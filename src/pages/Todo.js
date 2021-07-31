@@ -13,16 +13,27 @@ import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export const Todo = () => {
   const [products, setProducts] = useState([]);
-  const [product, setProduct] = useState({ name: "", value: "" });
+  const [product, setProduct] = useState({ id: "", name: "", value: "" });
 
   const sendForm = (e) => {
     e.preventDefault();
     if (product.name === "" || product.value === "") {
       alert("There are some empty fields!!");
     } else {
-      setProducts([...products, product]);
-      setProduct({ name: "", value: "" });
+      const newProduct = { ...product, id: new Date().getTime().toString() };
+      setProducts([...products, newProduct]);
+      setProduct({ id: "", name: "", value: "" });
     }
+  };
+
+  //Function to remove an item from the list
+  const removeItem = (itemId) => {
+    console.log("click");
+    const newProductList = products.filter((item) => {
+      return item.id !== itemId;
+    });
+
+    setProducts(newProductList);
   };
 
   return (
@@ -84,7 +95,9 @@ export const Todo = () => {
                           icon={faTrashAlt}
                           color='red'
                           style={{ marginRight: 10 }}
+                          onClick={(e) => removeItem(product.id)}
                         />
+
                         <FontAwesomeIcon icon={faEdit} />
                       </Col>
                     </Row>
