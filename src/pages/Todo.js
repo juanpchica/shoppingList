@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 //External Components
 import Container from "react-bootstrap/Container";
@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export const Todo = () => {
+  const [products, setProducts] = useState([]);
+
   return (
     <Container style={{ paddingTop: 50 }}>
       <h2>Supermarket ShopList</h2>
@@ -39,21 +41,31 @@ export const Todo = () => {
 
       <Row>
         <Col>
-          <ListGroup>
-            <ListGroup.Item>
-              <Row>
-                <Col>fasdfadsfsa</Col>
-                <Col xs='2'>
-                  <FontAwesomeIcon
-                    icon={faTrashAlt}
-                    color='red'
-                    style={{ marginRight: 10 }}
-                  />
-                  <FontAwesomeIcon icon={faEdit} />
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          </ListGroup>
+          {products.length == 0 ? (
+            <h3>Not items to show...</h3>
+          ) : (
+            <ListGroup>
+              {products.map((product) => {
+                return (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>
+                        {product.name} -- $<b>{product.value}</b>
+                      </Col>
+                      <Col xs='2'>
+                        <FontAwesomeIcon
+                          icon={faTrashAlt}
+                          color='red'
+                          style={{ marginRight: 10 }}
+                        />
+                        <FontAwesomeIcon icon={faEdit} />
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                );
+              })}
+            </ListGroup>
+          )}
         </Col>
       </Row>
     </Container>
