@@ -1,3 +1,5 @@
+import React from "react";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -5,12 +7,13 @@ import "./App.css";
 import Container from "react-bootstrap/Container";
 
 //Own components
-import { Navbar } from "./components/Navbar";
+import { NavbarMenu } from "./components/Navbar";
 function App() {
   return (
-    <Container>
-      <Navbar />
-    </Container>
+    <React.Fragment>
+      <NavbarMenu />
+      <Container></Container>
+    </React.Fragment>
   );
 }
 
