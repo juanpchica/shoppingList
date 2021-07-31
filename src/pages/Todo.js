@@ -8,6 +8,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
+
 export const Todo = () => {
   return (
     <Container style={{ paddingTop: 50 }}>
@@ -40,7 +43,14 @@ export const Todo = () => {
             <ListGroup.Item>
               <Row>
                 <Col>fasdfadsfsa</Col>
-                <Col xs='2'>fasd</Col>
+                <Col xs='2'>
+                  <FontAwesomeIcon
+                    icon={faTrashAlt}
+                    color='red'
+                    style={{ marginRight: 10 }}
+                  />
+                  <FontAwesomeIcon icon={faEdit} />
+                </Col>
               </Row>
             </ListGroup.Item>
           </ListGroup>
