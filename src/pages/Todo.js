@@ -14,14 +14,28 @@ import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 export const Todo = () => {
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({ id: "", name: "", value: "" });
-
+  const [isEditing, setIsEditing] = useState(false);
+  const [editID, setEditID] = useState(null);
   const sendForm = (e) => {
     e.preventDefault();
     if (product.name === "" || product.value === "") {
       alert("There are some empty fields!!");
     } else {
-      const newProduct = { ...product, id: new Date().getTime().toString() };
-      setProducts([...products, newProduct]);
+      if (isEditing) {
+        const newProductList = products.map((item) => {
+          if (item.id === editID) {
+            return { ...item, name: product.name, value: product.value };
+          }
+          return item;
+        });
+
+        setProducts(newProductList);
+        setIsEditing(false);
+        setEditID(null);
+      } else {
+        const newProduct = { ...product, id: new Date().getTime().toString() };
+        setProducts([...products, newProduct]);
+      }
       setProduct({ id: "", name: "", value: "" });
     }
   };
@@ -35,6 +49,13 @@ export const Todo = () => {
 
     setProducts(newProductList);
   };
+
+  //Function to edit an item from the list
+  function editItem(item) {
+    setIsEditing(true);
+    setEditID(item.id);
+    setProduct({ id: item.id, name: item.name, value: item.value });
+  }
 
   return (
     <Container style={{ paddingTop: 50 }}>
@@ -70,7 +91,7 @@ export const Todo = () => {
               </Form.Group>
 
               <Button variant='primary' type='submit'>
-                Add Item
+                {isEditing ? "Update Item" : "Add Item"}
               </Button>
             </Form>
           </div>
@@ -98,7 +119,10 @@ export const Todo = () => {
                           onClick={(e) => removeItem(product.id)}
                         />
 
-                        <FontAwesomeIcon icon={faEdit} />
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          onClick={(e) => editItem(product)}
+                        />
                       </Col>
                     </Row>
                   </ListGroup.Item>
