@@ -13,6 +13,17 @@ import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export const Todo = () => {
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState({ name: "", value: "" });
+
+  const sendForm = (e) => {
+    e.preventDefault();
+    if (product.name === "" || product.value === "") {
+      alert("There are some empty fields!!");
+    } else {
+      setProducts([...products, product]);
+      setProduct({ name: "", value: "" });
+    }
+  };
 
   return (
     <Container style={{ paddingTop: 50 }}>
@@ -20,15 +31,31 @@ export const Todo = () => {
       <Row>
         <Col>
           <div className='form-container'>
-            <Form>
+            <Form onSubmit={sendForm}>
               <Form.Group className='mb-3'>
                 <Form.Label>Product Name:</Form.Label>
-                <Form.Control type='text' placeholder='Enter Product Name' />
+                <Form.Control
+                  type='text'
+                  placeholder='Enter Product Name'
+                  name='productName'
+                  value={product.name}
+                  onChange={(e) => {
+                    setProduct({ ...product, name: e.target.value });
+                  }}
+                />
               </Form.Group>
 
               <Form.Group className='mb-3'>
                 <Form.Label>Price $: </Form.Label>
-                <Form.Control type='text' placeholder='Enter Price: ' />
+                <Form.Control
+                  type='text'
+                  placeholder='Enter Price: '
+                  name='productValue'
+                  value={product.value}
+                  onChange={(e) => {
+                    setProduct({ ...product, value: e.target.value });
+                  }}
+                />
               </Form.Group>
 
               <Button variant='primary' type='submit'>
@@ -41,13 +68,13 @@ export const Todo = () => {
 
       <Row>
         <Col>
-          {products.length == 0 ? (
+          {products.length === 0 ? (
             <h3>Not items to show...</h3>
           ) : (
             <ListGroup>
-              {products.map((product) => {
+              {products.map((product, index) => {
                 return (
-                  <ListGroup.Item>
+                  <ListGroup.Item key={index}>
                     <Row>
                       <Col>
                         {product.name} -- $<b>{product.value}</b>
