@@ -19,6 +19,9 @@ export const NavbarMenu = () => {
           <Nav.Link as={Link} to='/api'>
             API
           </Nav.Link>
+          <Nav.Link as={Link} to='/bank'>
+            BANK
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>
