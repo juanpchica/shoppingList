@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -10,6 +10,9 @@ export const Bank = () => {
   const [valueAccount, setValueAccount] = useState("");
 
   const accountValue = useSelector((state) => state.account);
+
+  const [state, dispatch] = useDispatch();
+
   return (
     <Container style={{ padding: 50 }}>
       <Card>
