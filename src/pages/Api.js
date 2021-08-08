@@ -13,21 +13,28 @@ const API_URL = "https://jsonmock.hackerrank.com/api/football_competitions";
 export const Api = () => {
   const [dataMenu, setDataMenu] = useState([]);
   const [years, setYears] = useState([]);
-  const [loadedData, setLoadedData] = useState(false);
-
-  const getMenuData = () => {
-    axios.get(API_URL).then((res) => {
-      setDataMenu(res.data);
-
-      getYears(res.data);
-    });
-  };
 
   const getYears = (data) => {
-    console.log(data);
+    const newDataYears = [
+      ...new Set(
+        data.map((item) => {
+          return item.year;
+        })
+      ),
+    ];
+
+    setYears(newDataYears);
   };
 
   useEffect(() => {
+    const getMenuData = async () => {
+      const res = await axios.get(API_URL);
+      if (res && res.data) {
+        setDataMenu(res.data);
+        getYears(res.data.data);
+      }
+    };
+
     getMenuData();
   }, []);
 
