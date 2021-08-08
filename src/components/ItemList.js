@@ -7,7 +7,11 @@ import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-const ItemList = ({ product, removeItem, editItem }) => {
+import { useProductsDispatch } from "../context/products";
+
+const ItemList = ({ product }) => {
+  const dispatch = useProductsDispatch();
+
   return (
     <Fragment>
       <ListGroup.Item>
@@ -20,10 +24,17 @@ const ItemList = ({ product, removeItem, editItem }) => {
               icon={faTrashAlt}
               color='red'
               style={{ marginRight: 10 }}
-              onClick={(e) => removeItem(product.id)}
+              onClick={(e) =>
+                dispatch({ type: "DELETE_PRODUCT", payload: product.id })
+              }
             />
 
-            <FontAwesomeIcon icon={faEdit} onClick={(e) => editItem(product)} />
+            <FontAwesomeIcon
+              icon={faEdit}
+              onClick={(e) =>
+                dispatch({ type: "EDIT_PRODUCT", payload: product })
+              }
+            />
           </Col>
         </Row>
       </ListGroup.Item>

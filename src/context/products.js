@@ -2,10 +2,15 @@ import { createContext, useContext, useReducer } from "react";
 
 const ProductsStateContext = createContext();
 const ProductsActionContext = createContext();
+const initialProduct = {
+  id: "",
+  name: "",
+  value: "",
+};
 
 const initialState = {
   products: [],
-  products: {},
+  product: initialProduct,
   isEditing: false,
 };
 
@@ -15,6 +20,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         products: [...state.products, action.payload],
+        product: initialProduct,
       };
     case "ADD_EDIT_PRODUCT":
       const index = state.products.findIndex(
@@ -25,7 +31,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isEditing: false,
-        product: {},
+        product: initialProduct,
       };
     case "EDIT_PRODUCT":
       return {
@@ -36,9 +42,17 @@ const reducer = (state, action) => {
     case "DELETE_PRODUCT":
       return {
         ...state,
-        products: state.products.filter((product) => {
-          product.id !== action.payload;
-        }),
+        products: state.products.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
+    case "SET_PRODUCT":
+      return {
+        ...state,
+        product: {
+          ...state.product,
+          [action.payload.name]: action.payload.value,
+        },
       };
     default:
       return {

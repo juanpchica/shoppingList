@@ -12,42 +12,33 @@ function FormApp() {
   const dispatch = useProductsDispatch();
   const { product, isEditing } = useProductsState();
 
-  const [productInputs, setProductInputs] = useState({
-    id: "",
-    name: "",
-    value: "",
-  });
-
   const sendForm = (e) => {
     e.preventDefault();
-    if (productInputs.name === "" || productInputs.value === "") {
+    if (product.name === "" || product.value === "") {
       alert("There are some empty fields!!");
     } else {
       if (isEditing) {
         dispatch({
           type: "ADD_EDIT_PRODUCT",
-          payload: { ...productInputs, id: product.id },
+          payload: { ...product },
         });
       } else {
         const newProduct = {
-          ...productInputs,
+          ...product,
           id: new Date().getTime().toString(),
         };
         dispatch({ type: "ADD_PRODUCT", payload: newProduct });
       }
     }
-    setProductInputs({ id: "", name: "", value: "" });
   };
 
-  const handleChange = (e) => {
-    setProductInputs((inputs) => {
-      return { ...inputs, [e.target.name]: e.target.value };
+  const handleChange = (e, name) => {
+    let fieldValue = name === "productName" ? "name" : "value";
+    dispatch({
+      type: "SET_PRODUCT",
+      payload: { name: fieldValue, value: e.target.value },
     });
   };
-
-  if (isEditing) {
-    setProductInputs(product);
-  }
 
   return (
     <div className='form-container'>
@@ -59,8 +50,10 @@ function FormApp() {
             type='text'
             placeholder='Enter Product Name'
             name='productName'
-            value={productInputs.name}
-            onChange={handleChange}
+            value={product.name}
+            onChange={(e) => {
+              handleChange(e, "productName");
+            }}
           />
         </Form.Group>
 
@@ -70,8 +63,10 @@ function FormApp() {
             type='text'
             placeholder='Enter Price: '
             name='productValue'
-            value={productInputs.value}
-            onChange={handleChange}
+            value={product.value}
+            onChange={(e) => {
+              handleChange(e, "productValue");
+            }}
           />
         </Form.Group>
 

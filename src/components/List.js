@@ -3,7 +3,10 @@ import React from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import ItemList from "./ItemList";
 
-const List = ({ products, editItem, removeItem }) => {
+import { useProductsState } from "../context/products";
+
+const List = () => {
+  const { products } = useProductsState();
   return (
     <div className='product-list'>
       {products.length === 0 ? (
@@ -11,14 +14,7 @@ const List = ({ products, editItem, removeItem }) => {
       ) : (
         <ListGroup>
           {products.map((product, index) => {
-            return (
-              <ItemList
-                key={index}
-                product={product}
-                editItem={editItem}
-                removeItem={removeItem}
-              />
-            );
+            return <ItemList key={index} product={product} />;
           })}
         </ListGroup>
       )}
