@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 //PersonalComponents
 import FormApp from "../components/FormApp";
 import List from "../components/List";
+import { ProductsProvider } from "../context/products";
 
 export const Todo = () => {
   const [products, setProducts] = useState([]);
@@ -61,27 +62,20 @@ export const Todo = () => {
   }
 
   return (
-    <Container style={{ paddingTop: 50 }}>
-      <h2>Supermarket ShopList</h2>
-      <Row>
-        <Col>
-          <FormApp
-            sendForm={sendForm}
-            isEditing={isEditing}
-            product={product}
-            setProduct={setProduct}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <List
-            removeItem={removeItem}
-            editItem={editItem}
-            products={products}
-          />
-        </Col>
-      </Row>
-    </Container>
+    <ProductsProvider>
+      <Container style={{ paddingTop: 50 }}>
+        <h2>Supermarket ShopList</h2>
+        <Row>
+          <Col>
+            <FormApp />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <List />
+          </Col>
+        </Row>
+      </Container>
+    </ProductsProvider>
   );
 };
