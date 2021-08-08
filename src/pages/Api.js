@@ -43,7 +43,13 @@ export const Api = () => {
       <Row>
         <Col xs={4}>
           <ListGroup>
-            <ListGroup.Item>Cras justo odio</ListGroup.Item>
+            {years && years.length > 0 ? (
+              years.map((year, index) => {
+                return <ListGroup.Item key={index}>{year}</ListGroup.Item>;
+              })
+            ) : (
+              <h3>Not data found...</h3>
+            )}
           </ListGroup>
         </Col>
         <Col></Col>
