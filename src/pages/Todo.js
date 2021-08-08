@@ -30,13 +30,6 @@ export const Todo = () => {
     setProducts(newProductList);
   };
 
-  //Function to edit an item from the list
-  function editItem(item) {
-    setIsEditing(true);
-    setEditID(item.id);
-    setProduct({ id: item.id, name: item.name, value: item.value });
-  }
-
   return (
     <ProductsProvider>
       <Container style={{ paddingTop: 50 }}>

@@ -17,15 +17,21 @@ const reducer = (state, action) => {
         products: [...state.products, action.payload],
       };
     case "ADD_EDIT_PRODUCT":
-      const index = state.products.findByIndex((product) => {
-        product.id === action.payload.id;
-      });
+      const index = state.products.findIndex(
+        (product) => product.id === action.payload.id
+      );
       state.products[index] = action.payload;
 
       return {
         ...state,
         isEditing: false,
         product: {},
+      };
+    case "EDIT_PRODUCT":
+      return {
+        ...state,
+        isEditing: true,
+        product: action.payload,
       };
 
     default:

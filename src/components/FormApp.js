@@ -45,6 +45,10 @@ function FormApp() {
     });
   };
 
+  if (isEditing) {
+    setProductInputs(product);
+  }
+
   return (
     <div className='form-container'>
       <HForm />
