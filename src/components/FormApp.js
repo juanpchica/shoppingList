@@ -5,37 +5,15 @@ import HForm from "./HForm";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-function FormApp({ setProducts, setIsEditing, setEditID, products }) {
-  const [product, setProduct] = useState({ id: "", name: "", value: "" });
-
-  const sendForm = (e) => {
-    e.preventDefault();
-    if (product.name === "" || product.value === "") {
-      alert("There are some empty fields!!");
-    } else {
-      if (isEditing) {
-        const newProductList = products.map((item) => {
-          if (item.id === editID) {
-            return { ...item, name: product.name, value: product.value };
-          }
-          return item;
-        });
-
-        setProducts(newProductList);
-        setIsEditing(false);
-        setEditID(null);
-      } else {
-        const newProduct = { ...product, id: new Date().getTime().toString() };
-        setProducts([...products, newProduct]);
-      }
-      setProduct({ id: "", name: "", value: "" });
-    }
+function FormApp({ sendForm, product, setProduct, isEditing }) {
+  const sendForm2 = (e) => {
+    sendForm(e, product);
   };
 
   return (
     <div className='form-container'>
       <HForm />
-      <Form onSubmit={sendForm}>
+      <Form onSubmit={sendForm2}>
         <Form.Group className='mb-3'>
           <Form.Label>Product Name:</Form.Label>
           <Form.Control

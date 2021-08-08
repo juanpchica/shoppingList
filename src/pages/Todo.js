@@ -8,12 +8,40 @@ import Col from "react-bootstrap/Col";
 
 //PersonalComponents
 import FormApp from "../components/FormApp";
+import List from "../components/List";
 
 export const Todo = () => {
   const [products, setProducts] = useState([]);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editID, setEditID] = useState(null);
+  const [product, setProduct] = useState({
+    id: "",
+    name: "",
+    value: "",
+  });
+  const sendForm = (e, product) => {
+    e.preventDefault();
+    if (product.name === "" || product.value === "") {
+      alert("There are some empty fields!!");
+    } else {
+      if (isEditing) {
+        const newProductList = products.map((item) => {
+          if (item.id === editID) {
+            return { ...item, name: product.name, value: product.value };
+          }
+          return item;
+        });
+
+        setProducts(newProductList);
+        setIsEditing(false);
+        setEditID(null);
+      } else {
+        const newProduct = { ...product, id: new Date().getTime().toString() };
+        setProducts([...products, newProduct]);
+      }
+    }
+    setProduct({ id: "", name: "", value: "" });
+  };
 
   //Function to remove an item from the list
   const removeItem = (itemId) => {
@@ -38,16 +66,20 @@ export const Todo = () => {
       <Row>
         <Col>
           <FormApp
-            setProducts={setProducts}
-            setIsEditing={setIsEditing}
-            setEditID={setEditID}
-            products={setEditID}
+            sendForm={sendForm}
+            isEditing={isEditing}
+            product={product}
+            setProduct={setProduct}
           />
         </Col>
       </Row>
       <Row>
         <Col>
-          <List />
+          <List
+            removeItem={removeItem}
+            editItem={editItem}
+            products={products}
+          />
         </Col>
       </Row>
     </Container>

@@ -1,12 +1,16 @@
 import React, { Fragment } from "react";
 
+//React
+import ListGroup from "react-bootstrap/ListGroup";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 
-const ItemList = ({ product }) => {
+const ItemList = ({ product, removeItem, editItem }) => {
   return (
     <Fragment>
-      <ListGroup.Item key={index}>
+      <ListGroup.Item>
         <Row>
           <Col>
             {product.name} -- $<b>{product.value}</b>
