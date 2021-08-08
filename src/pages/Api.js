@@ -15,6 +15,8 @@ export const Api = () => {
   const [years, setYears] = useState([]);
   const [year, setYear] = useState({});
   const [actualYear, setActualYear] = useState([]);
+  const [yearNumber, setYearNumber] = useState(null);
+
   const getYears = (data) => {
     const newDataYears = [
       ...new Set(
@@ -49,6 +51,10 @@ export const Api = () => {
       .catch((err) => console.log(err));
   };
 
+  useEffect(() => {
+    showYear(yearNumber);
+  }, [yearNumber]);
+
   return (
     <Container>
       <Row>
@@ -60,7 +66,7 @@ export const Api = () => {
                   <ListGroup.Item
                     key={index}
                     onClick={() => {
-                      showYear(year);
+                      setYearNumber(year);
                     }}
                   >
                     {year}
