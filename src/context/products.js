@@ -16,6 +16,18 @@ const reducer = (state, action) => {
         ...state,
         products: [...state.products, action.payload],
       };
+    case "ADD_EDIT_PRODUCT":
+      const index = state.products.findByIndex((product) => {
+        product.id === action.payload.id;
+      });
+      state.products[index] = action.payload;
+
+      return {
+        ...state,
+        isEditing: false,
+        product: {},
+      };
+
     default:
       return {
         ...state,

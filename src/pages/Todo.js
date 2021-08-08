@@ -12,7 +12,6 @@ import List from "../components/List";
 import { ProductsProvider } from "../context/products";
 
 export const Todo = () => {
-  const [products, setProducts] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editID, setEditID] = useState(null);
   const [product, setProduct] = useState({
@@ -20,29 +19,6 @@ export const Todo = () => {
     name: "",
     value: "",
   });
-  const sendForm = (e, product) => {
-    e.preventDefault();
-    if (product.name === "" || product.value === "") {
-      alert("There are some empty fields!!");
-    } else {
-      if (isEditing) {
-        const newProductList = products.map((item) => {
-          if (item.id === editID) {
-            return { ...item, name: product.name, value: product.value };
-          }
-          return item;
-        });
-
-        setProducts(newProductList);
-        setIsEditing(false);
-        setEditID(null);
-      } else {
-        const newProduct = { ...product, id: new Date().getTime().toString() };
-        setProducts([...products, newProduct]);
-      }
-    }
-    setProduct({ id: "", name: "", value: "" });
-  };
 
   //Function to remove an item from the list
   const removeItem = (itemId) => {
