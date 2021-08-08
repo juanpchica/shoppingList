@@ -1,11 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import HForm from "./HForm";
 
 //React Bootstrap
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-function FormApp() {
+function FormApp({ setProducts, setIsEditing, setEditID, products }) {
+  const [product, setProduct] = useState({ id: "", name: "", value: "" });
+
+  const sendForm = (e) => {
+    e.preventDefault();
+    if (product.name === "" || product.value === "") {
+      alert("There are some empty fields!!");
+    } else {
+      if (isEditing) {
+        const newProductList = products.map((item) => {
+          if (item.id === editID) {
+            return { ...item, name: product.name, value: product.value };
+          }
+          return item;
+        });
+
+        setProducts(newProductList);
+        setIsEditing(false);
+        setEditID(null);
+      } else {
+        const newProduct = { ...product, id: new Date().getTime().toString() };
+        setProducts([...products, newProduct]);
+      }
+      setProduct({ id: "", name: "", value: "" });
+    }
+  };
+
   return (
     <div className='form-container'>
       <HForm />
