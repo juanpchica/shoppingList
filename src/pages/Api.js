@@ -16,27 +16,20 @@ export const Api = () => {
   const [loadedData, setLoadedData] = useState(false);
 
   const getMenuData = () => {
-    axios.get(API_URL).then((data) => {
-      setDataMenu(data.data.data);
+    axios.get(API_URL).then((res) => {
+      setDataMenu(res.data);
 
-      //Itereate over data loaded
-      const newYears = dataMenu.map((item) => {
-        console.log(item);
-        return item.year;
-      });
-      setYears(newYears);
-
-      console.log(newYears);
+      getYears(res.data);
     });
+  };
+
+  const getYears = (data) => {
+    console.log(data);
   };
 
   useEffect(() => {
     getMenuData();
   }, []);
-
-  useEffect(() => {
-    console.log("loaded data");
-  }, [loadedData]);
 
   return (
     <Container>
