@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 //External Components
 import Container from "react-bootstrap/Container";
@@ -12,24 +12,6 @@ import List from "../components/List";
 import { ProductsProvider } from "../context/products";
 
 export const Todo = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editID, setEditID] = useState(null);
-  const [product, setProduct] = useState({
-    id: "",
-    name: "",
-    value: "",
-  });
-
-  //Function to remove an item from the list
-  const removeItem = (itemId) => {
-    console.log("click");
-    const newProductList = products.filter((item) => {
-      return item.id !== itemId;
-    });
-
-    setProducts(newProductList);
-  };
-
   return (
     <ProductsProvider>
       <Container style={{ paddingTop: 50 }}>
